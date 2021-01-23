@@ -1,0 +1,59 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Gerar Oauth Token
+  description: Especificação 'Gerar Oauth Token' do curso Implantando e Gerenciando o Apigee do Google
+  contact:
+    email: cleison@estiatraining.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: suport-eval-prod.apigee.net
+basePath: /gerar-oauth-token/v1
+schemes:
+  - http
+  - https
+tags:
+  - name: Criança Specs
+    description: Tudo sobre a especificação 'Gerar Oauth Token'
+
+paths:
+  /token:
+    get:
+      tags:
+        - Criança Specs
+      summary: Gerar Oauth token
+      operationId: getToken
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: O token gerado a partir do (key:secret) codificado via base64 e passado como 'Basic SHY4eHFOZXV3QlhLQ3JhUkxBVlc1T0FZR29LSXExWXg6VzZuSVNzaHdrVndjUnRSeA=='
+          required: true
+          type: string
+        - name: grant_type
+          in: path
+          description: O tipo de fluxo para geração do token 'client_credentials'
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/body_response'
+        400:
+          description: Invalid grant_type supplied
+        404:
+          description: client_id not found
+        500:
+          description: Server error
+definitions:
+  body_response:
+    type: object
+    required:
+      - token
+    properties:
+      token:
+        type: string
+        example: XEGcM8qhkEmy3zAVHkqcRKp5m0u0
